@@ -31,7 +31,7 @@ In PECL status of this extension is: %{_status}.
 
 %description -l pl
 Memcached to zaprojektowany dla dynamicznych aplikacji internetowych
-daemon cachuj±cy maj±cy za zadanie zmniejszenie obci±zenia bazy danych
+daemon cachuj±cy maj±cy za zadanie zmniejszenie obci±¿enia bazy danych
 przez przechowywanie w pamiêci obiektów.
 
 To rozszerzenie umo¿liwia pracê z memcached za pomoc± porêcznego
