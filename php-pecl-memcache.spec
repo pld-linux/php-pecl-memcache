@@ -58,6 +58,9 @@ install %{_modname}-%{version}/modules/%{_modname}.so $RPM_BUILD_ROOT%{extension
 cat <<'EOF' > $RPM_BUILD_ROOT%{_sysconfdir}/conf.d/%{_modname}.ini
 ; Enable %{_modname} extension module
 extension=%{_modname}.so
+;memcache.allow_failover=1
+;memcache.chunk_size=8192
+;memcache.default_port=11211
 EOF
 
 %clean
