@@ -1,7 +1,7 @@
 %define		_modname	memcache
 %define		_status		stable
 Summary:	%{_modname} - a memcached extension
-Summary(pl.UTF-8):   %{_modname} - rozszerzenie memcached
+Summary(pl.UTF-8):	%{_modname} - rozszerzenie memcached
 Name:		php-pecl-%{_modname}
 Version:	2.1.0
 Release:	1
