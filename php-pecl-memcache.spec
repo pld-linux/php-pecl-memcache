@@ -1,7 +1,7 @@
 %define		_modname	memcache
 %define		_status		stable
 Summary:	%{_modname} - a memcached extension
-Summary(pl):	%{_modname} - rozszerzenie memcached
+Summary(pl.UTF-8):   %{_modname} - rozszerzenie memcached
 Name:		php-pecl-%{_modname}
 Version:	2.1.0
 Release:	1
@@ -28,12 +28,12 @@ procedural interfaces.
 
 In PECL status of this extension is: %{_status}.
 
-%description -l pl
+%description -l pl.UTF-8
 Memcached to zaprojektowany dla dynamicznych aplikacji internetowych
-daemon cachuj±cy maj±cy za zadanie zmniejszenie obci±¿enia bazy danych
-przez przechowywanie w pamiêci obiektów.
+daemon cachujÄ…cy majÄ…cy za zadanie zmniejszenie obciÄ…Å¼enia bazy danych
+przez przechowywanie w pamiÄ™ci obiektÃ³w.
 
-To rozszerzenie umo¿liwia pracê z memcached za pomoc± porêcznego
+To rozszerzenie umoÅ¼liwia pracÄ™ z memcached za pomocÄ… porÄ™cznego
 zorientowanego obiektowo (oraz przez procedury) interfejsu.
 
 To rozszerzenie ma w PECL status: %{_status}.
