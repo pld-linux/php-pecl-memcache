@@ -3,12 +3,12 @@
 Summary:	%{_modname} - a memcached extension
 Summary(pl.UTF-8):	%{_modname} - rozszerzenie memcached
 Name:		php-pecl-%{_modname}
-Version:	2.1.0
+Version:	2.1.2
 Release:	1
 License:	PHP 2.02
 Group:		Development/Languages/PHP
 Source0:	http://pecl.php.net/get/%{_modname}-%{version}.tgz
-# Source0-md5:	2374d871015017829494dd85c0f63a23
+# Source0-md5:	cfde0918360f3909a242c3211604ad46
 URL:		http://pecl.php.net/package/memcache/
 BuildRequires:	php-devel >= 3:5.0.0
 BuildRequires:	rpmbuild(macros) >= 1.344
