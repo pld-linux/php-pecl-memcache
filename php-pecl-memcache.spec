@@ -79,6 +79,6 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc %{_modname}-%{version}/{CREDITS,README}
+%doc %{_modname}-%{version}/{CREDITS,README,example.php,memcache.php}
 %config(noreplace) %verify(not md5 mtime size) %{php_sysconfdir}/conf.d/%{_modname}.ini
 %attr(755,root,root) %{php_extensiondir}/%{_modname}.so
