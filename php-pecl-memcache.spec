@@ -15,7 +15,7 @@ BuildRequires:	rpmbuild(macros) >= 1.344
 %{?requires_php_extension}
 Requires:	php-common >= 4:5.0.4
 Requires:	php(zlib)
-#Sugests:	memcached
+#Suggests:	memcached
 Obsoletes:	php-pear-%{_modname}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
