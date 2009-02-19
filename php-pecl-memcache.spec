@@ -4,7 +4,7 @@ Summary:	%{_modname} - a memcached extension
 Summary(pl.UTF-8):	%{_modname} - rozszerzenie memcached
 Name:		php-pecl-%{_modname}
 Version:	3.0.3
-Release:	1
+Release:	2
 License:	PHP 2.02
 Group:		Development/Languages/PHP
 Source0:	http://pecl.php.net/get/%{_modname}-%{version}.tgz
@@ -14,7 +14,7 @@ BuildRequires:	php-devel >= 3:5.0.0
 BuildRequires:	rpmbuild(macros) >= 1.344
 %{?requires_php_extension}
 Requires:	php-common >= 4:5.0.4
-Requires:	php(zlib)
+Requires:	php-zlib
 #Suggests:	memcached
 Obsoletes:	php-pear-%{_modname}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
