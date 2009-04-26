@@ -5,7 +5,7 @@ Summary(pl.UTF-8):	%{_modname} - rozszerzenie memcached
 Name:		php-pecl-%{_modname}
 Version:	3.0.4
 Release:	1
-License:	PHP 2.02
+License:	PHP 3.01
 Group:		Development/Languages/PHP
 Source0:	http://pecl.php.net/get/%{_modname}-%{version}.tgz
 # Source0-md5:	07933ce0191274201ea6905cd509c5b0
