@@ -3,7 +3,7 @@ Summary:	%{modname} - a memcached extension
 Summary(pl.UTF-8):	%{modname} - rozszerzenie memcached
 Name:		php-pecl-%{modname}
 Version:	3.0.4
-Release:	1
+Release:	2
 License:	PHP 3.01
 Group:		Development/Languages/PHP
 Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
@@ -49,7 +49,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{php_sysconfdir}/conf.d,%{php_extensiondir},%{_examplesdir}/%{name}-%{version}}
 
 install modules/%{modname}.so $RPM_BUILD_ROOT%{php_extensiondir}
-cat <<'EOF' > $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d/%{modname}.ini
+cat <<'EOF' > $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d/session_%{modname}.ini
 ; Enable %{modname} extension module
 extension=%{modname}.so
 ;memcache.allow_failover=1
@@ -74,9 +74,17 @@ if [ "$1" = 0 ]; then
 	%php_webserver_restart
 fi
 
+%triggerpostun -- %{name} < 3.0.4-2
+if [ -f %{php_sysconfdir}/conf.d/%{modname}.ini.rpmsave ]; then
+	echo >&2 "Restoring old config: %{modname}.ini.rpmsave -> session_%{modname}.ini in %{php_sysconfdir}/conf.d"
+	cp -f %{php_sysconfdir}/conf.d/session_%{modname}.ini{,.rpmnew}
+	mv -f %{php_sysconfdir}/conf.d/{%{modname}.ini.rpmsave,session_%{modname}.ini}
+	%php_webserver_restart
+fi
+
 %files
 %defattr(644,root,root,755)
 %doc CREDITS README
-%config(noreplace) %verify(not md5 mtime size) %{php_sysconfdir}/conf.d/%{modname}.ini
+%config(noreplace) %verify(not md5 mtime size) %{php_sysconfdir}/conf.d/session_%{modname}.ini
 %attr(755,root,root) %{php_extensiondir}/%{modname}.so
 %{_examplesdir}/%{name}-%{version}
