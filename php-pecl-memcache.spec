@@ -8,6 +8,7 @@ License:	PHP 3.01
 Group:		Development/Languages/PHP
 Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
 # Source0-md5:	07933ce0191274201ea6905cd509c5b0
+Source1:	%{modname}.ini
 URL:		http://pecl.php.net/package/memcache/
 BuildRequires:	php-devel >= 3:5.0.0
 BuildRequires:	rpmbuild(macros) >= 1.344
@@ -47,20 +48,9 @@ phpize
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{php_sysconfdir}/conf.d,%{php_extensiondir},%{_examplesdir}/%{name}-%{version}}
-
-install modules/%{modname}.so $RPM_BUILD_ROOT%{php_extensiondir}
-cat <<'EOF' > $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d/session_%{modname}.ini
-; Enable %{modname} extension module
-extension=%{modname}.so
-;memcache.allow_failover=1
-;memcache.chunk_size=8192
-;memcache.default_port=11211
-;memcache.protocol=ascii
-;memcache.redudndancy=1
-;memcache.session_redundancy=2
-;memcache.hash_strategy=consistent
-;memcache.hash_function=crc32
-EOF
+install -p modules/%{modname}.so $RPM_BUILD_ROOT%{php_extensiondir}
+# we use "session_" prefix in inifile to get loader *after* session extension
+cp -a %{SOURCE1} $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d/session_%{modname}.ini
 cp -a example.php memcache.php $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 %clean
