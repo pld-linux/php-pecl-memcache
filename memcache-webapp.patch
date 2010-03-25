@@ -1,0 +1,28 @@
+--- php-pecl-memcache-3.0.4/memcache.php	2010-03-25 11:37:27.313562832 +0200
++++ php-pecl-memcache-3.0.4/memcache.php	2010-03-25 11:54:43.553667140 +0200
+@@ -19,21 +19,12 @@
+ 
+ $VERSION='$Id$';
+ 
+-define('ADMIN_USERNAME','memcache'); 	// Admin Username
+-define('ADMIN_PASSWORD','password');  	// Admin Password
+-define('DATE_FORMAT','Y/m/d H:i:s');
+-define('GRAPH_SIZE',200);
+-define('MAX_ITEM_DUMP',50);
+-
+-$MEMCACHE_SERVERS[] = 'mymemcache-server1:11211'; // add more as an array
+-$MEMCACHE_SERVERS[] = 'mymemcache-server2:11211'; // add more as an array
+-
+-
+-////////// END OF DEFAULT CONFIG AREA /////////////////////////////////////////////////////////////
++require_once '/etc/webapps/memcache/config.php';
+ 
+ ///////////////// Password protect ////////////////////////////////////////////////////////////////
+-if (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW']) ||
+-           $_SERVER['PHP_AUTH_USER'] != ADMIN_USERNAME ||$_SERVER['PHP_AUTH_PW'] != ADMIN_PASSWORD) {
++if (!is_null(ADMIN_USERNAME) &&
++	(!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW']) ||
++           $_SERVER['PHP_AUTH_USER'] != ADMIN_USERNAME ||$_SERVER['PHP_AUTH_PW'] != ADMIN_PASSWORD)) {
+ 			Header("WWW-Authenticate: Basic realm=\"Memcache Login\"");
+ 			Header("HTTP/1.0 401 Unauthorized");
+ 
