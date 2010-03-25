@@ -3,8 +3,9 @@
  * Config for memcache.php administrative interface.
  */
 
-// Admin Username
-define('ADMIN_USERNAME', 'memcache');
+// Admin Username, use <null> (language construct, not string) to skip the check.
+// For example if you want to restrict the access with webserver.
+define('ADMIN_USERNAME', null);
 // Admin Password
 define('ADMIN_PASSWORD', 'memcache');
 
