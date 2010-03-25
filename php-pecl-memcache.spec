@@ -56,7 +56,7 @@ zorientowanego obiektowo (oraz przez procedury) interfejsu.
 %package web
 Summary:	Web interface for memcache
 Group:		Libraries
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+# does not require extension itself
 Requires:	php-common >= 4:%{php_min_version}
 Requires:	php-date
 Requires:	php-gd
