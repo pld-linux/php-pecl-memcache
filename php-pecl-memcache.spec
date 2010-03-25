@@ -19,6 +19,7 @@ URL:		http://pecl.php.net/package/memcache/
 BuildRequires:	php-devel >= 3:5.0.0
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.344
+BuildRequires:	php-packagexml2cl
 %{?requires_php_extension}
 Requires:	php-common >= 4:5.0.4
 Requires:	php-session
@@ -74,6 +75,7 @@ mv %{modname}-%{version}/* .
 %patch0 -p1
 
 %build
+packagexml2cl package.xml > ChangeLog
 phpize
 %configure \
 	--with-zlib-dir=/usr
@@ -133,7 +135,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc CREDITS README
+%doc CREDITS README ChangeLog
 %config(noreplace) %verify(not md5 mtime size) %{php_sysconfdir}/conf.d/session_%{modname}.ini
 %attr(755,root,root) %{php_extensiondir}/%{modname}.so
 %{_examplesdir}/%{name}-%{version}
