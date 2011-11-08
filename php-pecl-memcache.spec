@@ -1,3 +1,4 @@
+%bcond_without	changelog
 %include	/usr/lib/rpm/macros.php
 %define		modname	memcache
 %define		php_min_version 5.0.0
@@ -5,7 +6,7 @@ Summary:	%{modname} - a memcached extension
 Summary(pl.UTF-8):	%{modname} - rozszerzenie memcached
 Name:		php-pecl-%{modname}
 Version:	3.0.6
-Release:	4
+Release:	5
 License:	PHP 3.01
 Group:		Development/Languages/PHP
 Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
@@ -19,7 +20,7 @@ URL:		http://pecl.php.net/package/memcache/
 BuildRequires:	php-devel >= 3:5.0.0
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.344
-BuildRequires:	php-packagexml2cl
+%{?with_changelog:BuildRequires:	php-packagexml2cl}
 %{?requires_php_extension}
 Requires:	php-common >= 4:5.0.4
 Requires:	php-session
@@ -75,7 +76,7 @@ mv %{modname}-%{version}/* .
 %patch0 -p1
 
 %build
-packagexml2cl package.xml > ChangeLog
+%{?with_changelog:packagexml2cl package.xml > ChangeLog}
 phpize
 %configure \
 	--with-zlib-dir=/usr
@@ -135,7 +136,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc CREDITS README ChangeLog
+%doc CREDITS README %{?with_changelog:ChangeLog}
 %config(noreplace) %verify(not md5 mtime size) %{php_sysconfdir}/conf.d/session_%{modname}.ini
 %attr(755,root,root) %{php_extensiondir}/%{modname}.so
 %{_examplesdir}/%{name}-%{version}
