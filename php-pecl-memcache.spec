@@ -19,7 +19,7 @@ URL:		http://pecl.php.net/package/memcache/
 BuildRequires:	php-devel >= 3:5.0.0
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.344
-#BuildRequires:	php-packagexml2cl
+BuildRequires:	php-packagexml2cl
 %{?requires_php_extension}
 Requires:	php-common >= 4:5.0.4
 Requires:	php-session
