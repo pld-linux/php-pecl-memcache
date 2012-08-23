@@ -5,7 +5,7 @@ Summary:	%{modname} - a memcached extension
 Summary(pl.UTF-8):	%{modname} - rozszerzenie memcached
 Name:		php-pecl-%{modname}
 Version:	3.0.6
-Release:	6
+Release:	7
 License:	PHP 3.01
 Group:		Development/Languages/PHP
 Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
@@ -17,11 +17,11 @@ Source4:	config.php
 Patch0:		%{modname}-webapp.patch
 URL:		http://pecl.php.net/package/memcache/
 BuildRequires:	php-devel >= 3:5.0.0
+BuildRequires:	php-packagexml2cl
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.344
-BuildRequires:	php-packagexml2cl
 %{?requires_php_extension}
-Requires:	php-common >= 4:5.0.4
+Requires:	php(core) >= 5.0.4
 Requires:	php-session
 Requires:	php-zlib
 Suggests:	memcached
@@ -58,7 +58,7 @@ zorientowanego obiektowo (oraz przez procedury) interfejsu.
 Summary:	Web interface for memcache
 Group:		Libraries
 # does not require extension itself
-Requires:	php-common >= 4:%{php_min_version}
+Requires:	php(core) >= %{php_min_version}
 Requires:	php-date
 Requires:	php-gd
 Requires:	php-pcre
