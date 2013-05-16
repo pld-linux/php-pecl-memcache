@@ -5,7 +5,7 @@ Summary:	%{modname} - a memcached extension
 Summary(pl.UTF-8):	%{modname} - rozszerzenie memcached
 Name:		php-pecl-%{modname}
 Version:	3.0.6
-Release:	7
+Release:	8
 License:	PHP 3.01
 Group:		Development/Languages/PHP
 Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
@@ -14,6 +14,7 @@ Source1:	%{modname}.ini
 Source2:	%{modname}-apache.conf
 Source3:	%{modname}-lighttpd.conf
 Source4:	config.php
+Source5:	%{modname}-httpd.conf
 Patch0:		%{modname}-webapp.patch
 URL:		http://pecl.php.net/package/memcache/
 BuildRequires:	php-devel >= 3:5.0.0
@@ -64,6 +65,7 @@ Requires:	php-gd
 Requires:	php-pcre
 Requires:	webapps
 Requires:	webserver(php) >= 5.0
+Conflicts:	apache-base < 2.4.0-1
 
 %description web
 Via this web interface script you can manage and view statistics of
@@ -93,8 +95,8 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}}
 cp -a memcache.php $RPM_BUILD_ROOT%{_appdir}
 cp -a %{SOURCE4} $RPM_BUILD_ROOT%{_sysconfdir}/config.php
 cp -a %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
-cp -a $RPM_BUILD_ROOT%{_sysconfdir}/{apache,httpd}.conf
 cp -a %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
+cp -a %{SOURCE5} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -121,10 +123,10 @@ fi
 %triggerun web -- apache1 < 1.3.37-3, apache1-base
 %webapp_unregister apache %{_webapp}
 
-%triggerin web -- apache < 2.2.0, apache-base
+%triggerin web -- apache-base
 %webapp_register httpd %{_webapp}
 
-%triggerun web -- apache < 2.2.0, apache-base
+%triggerun web -- apache-base
 %webapp_unregister httpd %{_webapp}
 
 %triggerin web -- lighttpd
