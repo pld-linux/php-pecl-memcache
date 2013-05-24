@@ -1,11 +1,12 @@
-%include	/usr/lib/rpm/macros.php
+%define		php_name	php%{?php_suffix}
 %define		modname	memcache
 %define		php_min_version 5.0.0
+%include	/usr/lib/rpm/macros.php
 Summary:	%{modname} - a memcached extension
 Summary(pl.UTF-8):	%{modname} - rozszerzenie memcached
-Name:		php-pecl-%{modname}
+Name:		%{php_name}-pecl-%{modname}
 Version:	3.0.8
-Release:	1
+Release:	2
 License:	PHP 3.01
 Group:		Development/Languages/PHP
 Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
@@ -17,14 +18,13 @@ Source4:	config.php
 Source5:	%{modname}-httpd.conf
 Patch0:		%{modname}-webapp.patch
 URL:		http://pecl.php.net/package/memcache/
-BuildRequires:	php-devel >= 3:5.0.0
+BuildRequires:	%{php_name}-devel >= 3:5.0.0
 BuildRequires:	php-packagexml2cl
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.344
 %{?requires_php_extension}
-Requires:	php(core) >= 5.0.4
-Requires:	php-session
-Requires:	php-zlib
+Requires:	%{php_name}-session
+Requires:	%{php_name}-zlib
 Suggests:	memcached
 Obsoletes:	php-pear-%{modname}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -60,12 +60,15 @@ Summary:	Web interface for memcache
 Group:		Libraries
 # does not require extension itself
 Requires:	php(core) >= %{php_min_version}
-Requires:	php-date
-Requires:	php-gd
-Requires:	php-pcre
+Requires:	php(date)
+Requires:	php(gd)
+Requires:	php(pcre)
 Requires:	webapps
 Requires:	webserver(php) >= 5.0
 Conflicts:	apache-base < 2.4.0-1
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description web
 Via this web interface script you can manage and view statistics of
