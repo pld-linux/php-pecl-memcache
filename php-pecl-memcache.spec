@@ -19,6 +19,7 @@ Source5:	%{modname}-httpd.conf
 Patch0:		%{modname}-webapp.patch
 URL:		http://pecl.php.net/package/memcache/
 BuildRequires:	%{php_name}-devel >= 3:5.0.0
+BuildRequires:	%{php_name}-xml
 BuildRequires:	php-packagexml2cl
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.650
