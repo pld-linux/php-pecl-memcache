@@ -6,7 +6,7 @@ Summary:	%{modname} - a memcached extension
 Summary(pl.UTF-8):	%{modname} - rozszerzenie memcached
 Name:		%{php_name}-pecl-%{modname}
 Version:	3.0.8
-Release:	5
+Release:	6
 License:	PHP 3.01
 Group:		Development/Languages/PHP
 Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
@@ -27,7 +27,7 @@ Requires:	%{php_name}-session
 Requires:	%{php_name}-zlib
 Suggests:	memcached
 Provides:	php(memcache)
-Obsoletes:	php-pear-%{modname}
+Obsoletes:	php-pecl-memcache < 3.0.8-5
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_webapps	/etc/webapps
