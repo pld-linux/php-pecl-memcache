@@ -15,7 +15,6 @@ Source1:	%{modname}.ini
 Source2:	%{modname}-apache.conf
 Source3:	%{modname}-lighttpd.conf
 Source4:	config.php
-Source5:	%{modname}-httpd.conf
 Patch0:		%{modname}-webapp.patch
 URL:		http://pecl.php.net/package/memcache/
 BuildRequires:	%{php_name}-devel >= 3:5.0.0
@@ -67,7 +66,6 @@ Requires:	php(gd)
 Requires:	php(pcre)
 Requires:	webapps
 Requires:	webserver(php) >= 5.0
-Conflicts:	apache-base < 2.4.0-1
 %if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
 %endif
@@ -100,8 +98,8 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}}
 cp -a memcache.php $RPM_BUILD_ROOT%{_appdir}
 cp -a %{SOURCE4} $RPM_BUILD_ROOT%{_sysconfdir}/config.php
 cp -a %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
+cp -a $RPM_BUILD_ROOT%{_sysconfdir}/{apache,httpd}.conf
 cp -a %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
-cp -a %{SOURCE5} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -128,10 +126,10 @@ fi
 %triggerun web -- apache1 < 1.3.37-3, apache1-base
 %webapp_unregister apache %{_webapp}
 
-%triggerin web -- apache-base
+%triggerin web -- apache < 2.2.0, apache-base
 %webapp_register httpd %{_webapp}
 
-%triggerun web -- apache-base
+%triggerun web -- apache < 2.2.0, apache-base
 %webapp_unregister httpd %{_webapp}
 
 %triggerin web -- lighttpd
