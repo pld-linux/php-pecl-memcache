@@ -1,3 +1,7 @@
+#
+# Conditional build:
+%bcond_without	tests		# build without tests
+
 %define		php_name	php%{?php_suffix}
 %define		modname	memcache
 %define		php_min_version 5.0.0
@@ -23,6 +27,10 @@ BuildRequires:	%{php_name}-xml
 BuildRequires:	php-packagexml2cl
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.650
+%if %{with tests}
+BuildRequires:	%{php_name}-cli
+BuildRequires:	%{php_name}-session
+%endif
 %{?requires_php_extension}
 Requires:	%{php_name}-session
 Requires:	%{php_name}-zlib
@@ -86,6 +94,16 @@ phpize
 %configure \
 	--with-zlib-dir=/usr
 %{__make}
+
+%if %{with tests}
+# simple module load test
+%{__php} -n -q \
+	-d extension_dir=modules \
+	-d extension=%{php_extensiondir}/session.so \
+	-d extension=%{modname}.so \
+	-m > modules.log
+grep %{modname} modules.log
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
