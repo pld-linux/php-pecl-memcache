@@ -1,0 +1,20 @@
+
+move connect to proper section to make SKIP work
+
+https://github.com/websupport-sk/pecl-memcache/pull/16
+
+--- php70-pecl-memcache-3.0.9/tests/pecl16442.phpt~	2016-11-23 03:56:10.000000000 +0200
++++ php70-pecl-memcache-3.0.9/tests/pecl16442.phpt	2016-11-23 03:57:20.017464335 +0200
+@@ -1,10 +1,10 @@
+ --TEST--
+ PECL bug #16442 (memcache_set fail with integer value)
++--SKIPIF--
++<?php include 'connect.inc'; ?>
+ --FILE--
+ <?php
+ 
+-include 'connect.inc';
+-
+ $memcache_obj = memcache_connect('localhost', 11211);
+ memcache_set($memcache_obj, 'test123112', 1, MEMCACHE_COMPRESSED, 30);
+ $ret = memcache_get($memcache_obj, 'test123112');

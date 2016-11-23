@@ -21,6 +21,7 @@ Source2:	%{modname}-apache.conf
 Source3:	%{modname}-lighttpd.conf
 Source4:	config.php
 Patch0:		%{modname}-webapp.patch
+Patch1:		tests.patch
 URL:		http://pecl.php.net/package/memcache/
 BuildRequires:	%{php_name}-devel >= 3:5.0.0
 BuildRequires:	%{php_name}-xml
@@ -88,6 +89,7 @@ memcache.
 %setup -qc
 mv pecl-%{modname}-*/{.??*,*} .
 %patch0 -p1
+%patch1 -p1
 
 %build
 packagexml2cl package.xml > ChangeLog
