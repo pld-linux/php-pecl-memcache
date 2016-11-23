@@ -133,6 +133,7 @@ hash strategies and functions [tests/046.phpt]
 ini_set('session.save_handler') with unix domain socket [tests/053.phpt]
 FLAKY: memcache->addServer() with microsecond timeout [tests/056.phpt]
 ini_set('session.save_handler') [tests/036.phpt]
+ini_set("memcache.allow_failover") [tests/029.phpt]
 EOF
 
 %build
