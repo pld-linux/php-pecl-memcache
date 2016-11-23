@@ -5,18 +5,18 @@
 Summary:	%{modname} - a memcached extension
 Summary(pl.UTF-8):	%{modname} - rozszerzenie memcached
 Name:		%{php_name}-pecl-%{modname}
-Version:	3.0.8
-Release:	8
+Version:	3.0.9
+Release:	1
 License:	PHP 3.01
 Group:		Development/Languages/PHP
-Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
-# Source0-md5:	24505e9b263d2c77f8ae5e9b4725e7d1
+#Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
+Source0:	https://github.com/websupport-sk/pecl-memcache/archive/NON_BLOCKING_IO_php7.tar.gz
+# Source0-md5:	7751d8191302a726449d7c6506b8783d
 Source1:	%{modname}.ini
 Source2:	%{modname}-apache.conf
 Source3:	%{modname}-lighttpd.conf
 Source4:	config.php
 Patch0:		%{modname}-webapp.patch
-Patch1:		memcache-faulty-inline.diff
 URL:		http://pecl.php.net/package/memcache/
 BuildRequires:	%{php_name}-devel >= 3:5.0.0
 BuildRequires:	%{php_name}-xml
@@ -76,10 +76,9 @@ Via this web interface script you can manage and view statistics of
 memcache.
 
 %prep
-%setup -q -c
-mv %{modname}-%{version}/* .
+%setup -qc
+mv pecl-%{modname}-*/{.??*,*} .
 %patch0 -p1
-%patch1 -p1
 
 %build
 packagexml2cl package.xml > ChangeLog
@@ -93,15 +92,15 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{php_sysconfdir}/conf.d,%{php_extensiondir},%{_examplesdir}/%{name}-%{version}}
 install -p modules/%{modname}.so $RPM_BUILD_ROOT%{php_extensiondir}
 # we use "session_" prefix in inifile to get loader *after* session extension
-cp -a %{SOURCE1} $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d/session_%{modname}.ini
-cp -a example.php $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d/session_%{modname}.ini
+cp -p example.php $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}}
-cp -a memcache.php $RPM_BUILD_ROOT%{_appdir}
-cp -a %{SOURCE4} $RPM_BUILD_ROOT%{_sysconfdir}/config.php
-cp -a %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
-cp -a $RPM_BUILD_ROOT%{_sysconfdir}/{apache,httpd}.conf
-cp -a %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
+cp -p memcache.php $RPM_BUILD_ROOT%{_appdir}
+cp -p %{SOURCE4} $RPM_BUILD_ROOT%{_sysconfdir}/config.php
+cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
+cp -p $RPM_BUILD_ROOT%{_sysconfdir}/{apache,httpd}.conf
+cp -p %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
