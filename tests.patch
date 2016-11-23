@@ -1,11 +1,18 @@
-
-move connect to proper section to make SKIP work
-
 https://github.com/websupport-sk/pecl-memcache/pull/16
 
---- php70-pecl-memcache-3.0.9/tests/pecl16442.phpt~	2016-11-23 03:56:10.000000000 +0200
-+++ php70-pecl-memcache-3.0.9/tests/pecl16442.phpt	2016-11-23 03:57:20.017464335 +0200
-@@ -1,10 +1,10 @@
+commit efad82d9517a13ec0073525759ac900a55c27c99
+Author: Elan Ruusamäe <glen@delfi.ee>
+Date:   Wed Nov 23 03:59:51 2016 +0200
+
+    move connect to proper section to make SKIP work
+    
+    otherwise this test will FAIL instead of SKIP if memcache server is not available
+
+diff --git a/tests/pecl16442.phpt b/tests/pecl16442.phpt
+index b1a7edf..499c645 100644
+--- a/tests/pecl16442.phpt
++++ b/tests/pecl16442.phpt
+@@ -1,5 +1,7 @@
  --TEST--
  PECL bug #16442 (memcache_set fail with integer value)
 +--SKIPIF--
@@ -13,8 +20,3 @@ https://github.com/websupport-sk/pecl-memcache/pull/16
  --FILE--
  <?php
  
--include 'connect.inc';
--
- $memcache_obj = memcache_connect('localhost', 11211);
- memcache_set($memcache_obj, 'test123112', 1, MEMCACHE_COMPRESSED, 30);
- $ret = memcache_get($memcache_obj, 'test123112');
