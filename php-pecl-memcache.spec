@@ -5,23 +5,24 @@
 %define		php_name	php%{?php_suffix}
 %define		modname	memcache
 %define		php_min_version 5.0.0
+%define		commit e702b5f91
 %include	/usr/lib/rpm/macros.php
 Summary:	%{modname} - a memcached extension
 Summary(pl.UTF-8):	%{modname} - rozszerzenie memcached
 Name:		%{php_name}-pecl-%{modname}
 Version:	3.0.9
-Release:	1
+Release:	2
 License:	PHP 3.01
 Group:		Development/Languages/PHP
 #Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
-Source0:	https://github.com/websupport-sk/pecl-memcache/archive/NON_BLOCKING_IO_php7.tar.gz
-# Source0-md5:	7751d8191302a726449d7c6506b8783d
+# https://github.com/websupport-sk/pecl-memcache/commits/NON_BLOCKING_IO_php7
+Source0:	https://github.com/websupport-sk/pecl-memcache/archive/%{commit}/%{modname}-%{version}-%{commit}.tar.gz
+# Source0-md5:	945e6a30b3cac160abf9b6d103c5676b
 Source1:	%{modname}.ini
 Source2:	%{modname}-apache.conf
 Source3:	%{modname}-lighttpd.conf
 Source4:	config.php
 Patch0:		%{modname}-webapp.patch
-Patch1:		tests.patch
 URL:		http://pecl.php.net/package/memcache/
 BuildRequires:	%{php_name}-devel >= 3:5.0.0
 BuildRequires:	%{php_name}-xml
@@ -91,7 +92,6 @@ memcache.
 %setup -qc
 mv pecl-%{modname}-*/{.??*,*} .
 %patch0 -p1
-%patch1 -p1
 
 # locks up on carme, likely due udp very long timeout
 rm tests/039.phpt
