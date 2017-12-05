@@ -137,6 +137,7 @@ ini_set("memcache.allow_failover") [tests/029.phpt]
 %if "%{php_major_version}.%{php_minor_version}" >= "7.1"
 strange keys [tests/005.phpt]
 %endif
+memcache multi host save path function [tests/bug73539.phpt]
 EOF
 
 %build
