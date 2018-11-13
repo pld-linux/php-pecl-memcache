@@ -23,6 +23,8 @@ Source2:	%{modname}-apache.conf
 Source3:	%{modname}-lighttpd.conf
 Source4:	config.php
 Patch0:		%{modname}-webapp.patch
+Patch1:		https://github.com/websupport-sk/pecl-memcache/pull/26.patch
+# Patch1-md5:	7d963433154cd82caea94a7476e73697
 URL:		http://pecl.php.net/package/memcache/
 BuildRequires:	%{php_name}-devel >= 3:5.0.0
 BuildRequires:	%{php_name}-xml
@@ -92,6 +94,7 @@ memcache.
 %setup -qc
 mv pecl-%{modname}-*/{.??*,*} .
 %patch0 -p1
+%patch1 -p1
 
 # locks up on carme, likely due udp very long timeout
 rm tests/039.phpt
