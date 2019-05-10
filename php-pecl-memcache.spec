@@ -10,24 +10,18 @@
 Summary:	%{modname} - a memcached extension
 Summary(pl.UTF-8):	%{modname} - rozszerzenie memcached
 Name:		%{php_name}-pecl-%{modname}
-Version:	3.0.9
-Release:	3
+Version:	4.0.3
+Release:	1
 License:	PHP 3.01
 Group:		Development/Languages/PHP
-#Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
-# https://github.com/websupport-sk/pecl-memcache/commits/NON_BLOCKING_IO_php7
-Source0:	https://github.com/websupport-sk/pecl-memcache/archive/%{commit}/%{modname}-%{version}-%{commit}.tar.gz
-# Source0-md5:	945e6a30b3cac160abf9b6d103c5676b
+Source0:	https://github.com/websupport-sk/pecl-memcache/archive/%{version}/%{modname}-%{version}.tar.gz
+# Source0-md5:	21a001ef690a1397a8b62990254cc8c2
 Source1:	%{modname}.ini
 Source2:	%{modname}-apache.conf
 Source3:	%{modname}-lighttpd.conf
 Source4:	config.php
 Patch0:		%{modname}-webapp.patch
-Patch1:		https://github.com/websupport-sk/pecl-memcache/pull/26.patch
-# Patch1-md5:	7d963433154cd82caea94a7476e73697
-Patch2:		https://github.com/websupport-sk/pecl-memcache/pull/30.patch
-# Patch2-md5:	770b57a139428cc601f19e13dbdb2247
-URL:		http://pecl.php.net/package/memcache/
+URL:		https://github.com/websupport-sk/pecl-memcache/
 BuildRequires:	%{php_name}-devel >= 3:5.0.0
 BuildRequires:	%{php_name}-xml
 BuildRequires:	php-packagexml2cl
@@ -96,8 +90,6 @@ memcache.
 %setup -qc
 mv pecl-%{modname}-*/{.??*,*} .
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 # locks up on carme, likely due udp very long timeout
 rm tests/039.phpt
