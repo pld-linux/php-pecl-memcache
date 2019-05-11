@@ -91,11 +91,6 @@ memcache.
 mv pecl-%{modname}-*/{.??*,*} .
 %patch0 -p1
 
-# locks up on carme, likely due udp very long timeout
-rm tests/039.phpt
-rm tests/041.phpt
-rm tests/042.phpt
-
 # skip failed tests
 xfail() {
 	set +x
@@ -113,29 +108,6 @@ xfail() {
 }
 
 xfail <<'EOF'
-memcache->addServer() [tests/019.phpt]
-memcache->set()/memcache->get() with multiple keys and load balancing [tests/020.phpt]
-memcache->getExtendedStats() [tests/022.phpt]
-memcache_get_extended_stats() [tests/022a.phpt]
-memcache->delete() with load balancing [tests/023.phpt]
-memcache->increment() with load balancing [tests/025.phpt]
-memcache->delete() with load balancing [tests/026.phpt]
-memcache->addServer() adding server in failed mode [tests/031.phpt]
-memcache->getServerStatus(), memcache->setServerParams() [tests/032.phpt]
-memcache::connect() with unix domain socket [tests/035.phpt]
-memcache->get() over UDP [tests/038.phpt]
-memcache->increment()/decrement() with multiple keys [tests/040.phpt]
-ini_set('memcache.redundancy') [tests/043.phpt]
-ini_set('memcache.session_redundancy') [tests/044.phpt]
-hash strategies and functions [tests/046.phpt]
-ini_set('session.save_handler') with unix domain socket [tests/053.phpt]
-FLAKY: memcache->addServer() with microsecond timeout [tests/056.phpt]
-ini_set('session.save_handler') [tests/036.phpt]
-ini_set("memcache.allow_failover") [tests/029.phpt]
-%if "%{php_major_version}.%{php_minor_version}" >= "7.1"
-strange keys [tests/005.phpt]
-%endif
-memcache multi host save path function [tests/bug73539.phpt]
 EOF
 
 %build
