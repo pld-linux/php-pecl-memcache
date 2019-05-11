@@ -109,6 +109,28 @@ xfail() {
 }
 
 xfail <<'EOF'
+memcache->addServer() [tests/019.phpt]
+memcache->set()/memcache->get() with multiple keys and load balancing [tests/020.phpt]
+memcache->getExtendedStats() [tests/022.phpt]
+memcache_get_extended_stats() [tests/022a.phpt]
+memcache->delete() with load balancing [tests/023.phpt]
+memcache->increment() with load balancing [tests/025.phpt]
+memcache->delete() with load balancing [tests/026.phpt]
+memcache->addServer() adding server in failed mode [tests/031.phpt]
+memcache->getServerStatus(), memcache->setServerParams() [tests/032.phpt]
+memcache::connect() with unix domain socket [tests/035.phpt]
+ini_set('session.save_handler') [tests/036.phpt]
+ini_set('session.save_path') [tests/036b.phpt]
+memcache->increment()/decrement() with multiple keys [tests/040.phpt]
+memcache->delete() with multiple keys [tests/041.phpt]
+memcache->set() with multiple values [tests/042.phpt]
+ini_set('memcache.redundancy') [tests/043.phpt]
+ini_set('memcache.session_redundancy') [tests/044.phpt]
+ini_set('memcache.session_redundancy') [tests/044b.phpt]
+hash strategies and functions [tests/046.phpt]
+ini_set('session.save_handler') with unix domain socket [tests/053.phpt]
+memcache multi host save path function [tests/bug73539.phpt]
+session_regenerate_id() should not cause fatal error [tests/githubbug13.phpt]
 EOF
 
 %build
