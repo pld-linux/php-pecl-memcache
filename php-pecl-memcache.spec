@@ -10,19 +10,19 @@
 Summary:	%{modname} - a memcached extension
 Summary(pl.UTF-8):	%{modname} - rozszerzenie memcached
 Name:		%{php_name}-pecl-%{modname}
-Version:	4.0.3
+Version:	4.0.4
 Release:	1
 License:	PHP 3.01
 Group:		Development/Languages/PHP
 Source0:	https://github.com/websupport-sk/pecl-memcache/archive/%{version}/%{modname}-%{version}.tar.gz
-# Source0-md5:	21a001ef690a1397a8b62990254cc8c2
+# Source0-md5:	612c575eccc18d98484b72c0cff6907a
 Source1:	%{modname}.ini
 Source2:	%{modname}-apache.conf
 Source3:	%{modname}-lighttpd.conf
 Source4:	config.php
 Patch0:		%{modname}-webapp.patch
 URL:		https://github.com/websupport-sk/pecl-memcache/
-BuildRequires:	%{php_name}-devel >= 3:5.0.0
+BuildRequires:	%{php_name}-devel >= 3:7.0.0
 BuildRequires:	%{php_name}-xml
 BuildRequires:	php-packagexml2cl
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
