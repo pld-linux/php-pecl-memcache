@@ -23,16 +23,16 @@ Source4:	config.php
 Patch0:		%{modname}-webapp.patch
 URL:		https://github.com/websupport-sk/pecl-memcache/
 BuildRequires:	%{php_name}-devel >= 3:7.0.0
+BuildRequires:	%{php_name}-pcre
+BuildRequires:	%{php_name}-session
+BuildRequires:	%{php_name}-simplexml
+BuildRequires:	%{php_name}-spl
 BuildRequires:	%{php_name}-xml
 BuildRequires:	php-packagexml2cl
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.650
 %if %{with tests}
 BuildRequires:	%{php_name}-cli
-BuildRequires:	%{php_name}-pcre
-BuildRequires:	%{php_name}-session
-BuildRequires:	%{php_name}-simplexml
-BuildRequires:	%{php_name}-spl
 BuildRequires:	memcached
 %endif
 %{?requires_php_extension}
@@ -92,6 +92,20 @@ memcache.
 mv pecl-%{modname}-*/{.??*,*} .
 %patch0 -p1
 
+cat <<'EOF' > run-tests.sh
+#!/bin/sh
+export NO_INTERACTION=1 REPORT_EXIT_STATUS=1 MALLOC_CHECK_=2
+exec %{__make} test \
+	PHP_EXECUTABLE=%{__php} \
+%if "%php_major_version.%php_minor_version" >= "7.4"
+	PHP_TEST_SHARED_SYSTEM_EXTENSIONS="simplexml session" \
+%else
+	PHP_TEST_SHARED_SYSTEM_EXTENSIONS="pcre spl simplexml session" \
+%endif
+	RUN_TESTS_SETTINGS="-q $*"
+EOF
+chmod +x run-tests.sh
+
 # skip failed tests
 xfail() {
 	set +x
@@ -140,33 +154,28 @@ phpize
 	--with-zlib-dir=/usr
 %{__make}
 
-%if %{with tests}
 # simple module load test
 %{__php} -n -q \
 	-d extension_dir=modules \
-	-d extension=%{php_extensiondir}/pcre.so \
+%if "%php_major_version.%php_minor_version" >= "7.4"
 	-d extension=%{php_extensiondir}/simplexml.so \
-	-d extension=%{php_extensiondir}/spl.so \
 	-d extension=%{php_extensiondir}/session.so \
+%else
+	-d extension=%{php_extensiondir}/pcre.so \
+	-d extension=%{php_extensiondir}/spl.so \
+	-d extension=%{php_extensiondir}/simplexml.so \
+	-d extension=%{php_extensiondir}/session.so \
+%endif
 	-d extension=%{modname}.so \
 	-m > modules.log
 grep %{modname} modules.log
 
-cat <<'EOF' > run-tests.sh
-#!/bin/sh
-export NO_INTERACTION=1 REPORT_EXIT_STATUS=1 MALLOC_CHECK_=2
-exec %{__make} test \
-	PHP_EXECUTABLE=%{__php} \
-	PHP_TEST_SHARED_SYSTEM_EXTENSIONS="pcre simplexml spl session" \
-	RUN_TESTS_SETTINGS="-q $*"
-EOF
-chmod +x run-tests.sh
-
+%if %{with tests}
 # Launch the Memcached service and stop it on exit
 %{_sbindir}/memcached -p 11211 -U 11211 -d -P $PWD/memcached.pid
 trap 'kill $(cat memcached.pid)' EXIT INT
 
-./run-tests.sh
+./run-tests.sh --show-diff
 %endif
 
 %install
