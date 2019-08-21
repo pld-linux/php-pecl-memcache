@@ -1,0 +1,12 @@
+--- php73-pecl-memcache-4.0.4/tests/connect.inc~	2019-05-28 11:55:34.000000000 +0300
++++ php73-pecl-memcache-4.0.4/tests/connect.inc	2019-08-20 17:25:17.729668632 +0300
+@@ -34,7 +34,8 @@
+  * memcached -d -u memcached -s /var/run/memcached/memcached.sock
+  * chmod a+w /var/run/memcached/memcached.sock
+  */
+-$domainsocket = 'unix:///var/run/memcached/memcached.sock';
++$cwd = getcwd();
++$domainsocket = "unix://{$cwd}/memcached.sock";
+ 
+ // A server which is guaranteed to fail immediatly
+ $nonExistingHost = "localhost";

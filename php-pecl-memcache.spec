@@ -21,6 +21,7 @@ Source2:	%{modname}-apache.conf
 Source3:	%{modname}-lighttpd.conf
 Source4:	config.php
 Patch0:		%{modname}-webapp.patch
+Patch1:		tests.patch
 URL:		https://github.com/websupport-sk/pecl-memcache/
 BuildRequires:	%{php_name}-devel >= 3:7.0.0
 BuildRequires:	%{php_name}-pcre
@@ -91,6 +92,7 @@ memcache.
 %setup -qc
 mv pecl-%{modname}-*/{.??*,*} .
 %patch0 -p1
+%patch1 -p1
 
 cat <<'EOF' > run-tests.sh
 #!/bin/sh
@@ -172,8 +174,10 @@ grep %{modname} modules.log
 
 %if %{with tests}
 # Launch the Memcached service and stop it on exit
+domainsocket=$PWD/memcached.sock
 %{_sbindir}/memcached -p 11211 -U 11211 -d -P $PWD/memcached.pid
-trap 'kill $(cat memcached.pid)' EXIT INT
+%{_sbindir}/memcached -s $domainsocket -d -P $PWD/memcached-udp.pid
+trap 'kill $(cat memcached.pid memcached-udp.pid)' EXIT INT
 
 ./run-tests.sh --show-diff
 %endif
