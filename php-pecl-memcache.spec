@@ -109,12 +109,16 @@ EOF
 chmod +x run-tests.sh
 
 # skip failed tests
+die() {
+	echo >&2 "$*"
+	exit 1
+}
 xfail() {
 	set +x
 	while read s; do
 		t=$(echo "$s" | sed -rne 's/.+\[(.+)\]/\1/p')
 
-		test -f "$t"
+		test -f "$t" || die "Missing $t"
 		echo >&2 "XFAIL: $s"
 		cat >> $t <<-EOF
 
@@ -142,7 +146,6 @@ memcache->delete() with multiple keys [tests/041.phpt]
 memcache->set() with multiple values [tests/042.phpt]
 ini_set('memcache.redundancy') [tests/043.phpt]
 ini_set('memcache.session_redundancy') [tests/044.phpt]
-ini_set('memcache.session_redundancy') [tests/044b.phpt]
 hash strategies and functions [tests/046.phpt]
 ini_set('session.save_handler') with unix domain socket [tests/053.phpt]
 memcache multi host save path function [tests/bug73539.phpt]
