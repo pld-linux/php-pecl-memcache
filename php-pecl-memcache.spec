@@ -6,7 +6,6 @@
 %define		modname	memcache
 %define		php_min_version 5.0.0
 %define		commit e702b5f91
-%include	/usr/lib/rpm/macros.php
 Summary:	%{modname} - a memcached extension
 Summary(pl.UTF-8):	%{modname} - rozszerzenie memcached
 Name:		%{php_name}-pecl-%{modname}
