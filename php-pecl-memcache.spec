@@ -1,6 +1,12 @@
 #
 # Conditional build:
 %bcond_without	tests		# build without tests
+%bcond_without	web		# make web package
+
+# build "web" with 7.4 build
+%if 0%{?_pld_builder:1} && "%{?php_suffix}" != "74"
+%undefine	with_web
+%endif
 
 %define		php_name	php%{?php_suffix}
 %define		modname	memcache
@@ -10,7 +16,7 @@ Summary:	%{modname} - a memcached extension
 Summary(pl.UTF-8):	%{modname} - rozszerzenie memcached
 Name:		%{php_name}-pecl-%{modname}
 Version:	4.0.5.1
-Release:	1
+Release:	2
 License:	PHP 3.01
 Group:		Development/Languages/PHP
 Source0:	https://pecl.php.net/get/memcache-%{version}.tgz
@@ -69,7 +75,7 @@ przez przechowywanie w pamięci obiektów.
 To rozszerzenie umożliwia pracę z memcached za pomocą poręcznego
 zorientowanego obiektowo (oraz przez procedury) interfejsu.
 
-%package web
+%package -n php-pecl-memcache-web
 Summary:	Web interface for memcache
 Group:		Libraries
 # does not require extension itself
@@ -79,11 +85,16 @@ Requires:	php(gd)
 Requires:	php(pcre)
 Requires:	webapps
 Requires:	webserver(php) >= 5.0
+Obsoletes:	php70-pecl-memcache-web < 4.0.5.1-2
+Obsoletes:	php71-pecl-memcache-web < 4.0.5.1-2
+Obsoletes:	php72-pecl-memcache-web < 4.0.5.1-2
+Obsoletes:	php73-pecl-memcache-web < 4.0.5.1-2
+Obsoletes:	php74-pecl-memcache-web < 4.0.5.1-2
 %if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
 %endif
 
-%description web
+%description -n php-pecl-memcache-web
 Via this web interface script you can manage and view statistics of
 memcache.
 
@@ -192,12 +203,14 @@ install -p modules/%{modname}.so $RPM_BUILD_ROOT%{php_extensiondir}
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d/session_%{modname}.ini
 cp -p example.php $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
+%if %{with web}
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}}
 cp -p memcache.php $RPM_BUILD_ROOT%{_appdir}
 cp -p %{SOURCE4} $RPM_BUILD_ROOT%{_sysconfdir}/config.php
 cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 cp -p $RPM_BUILD_ROOT%{_sysconfdir}/{apache,httpd}.conf
 cp -p %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -218,22 +231,22 @@ if [ -f %{php_sysconfdir}/conf.d/%{modname}.ini.rpmsave ]; then
 	%php_webserver_restart
 fi
 
-%triggerin web -- apache1 < 1.3.37-3, apache1-base
+%triggerin -n php-pecl-memcache-web -- apache1 < 1.3.37-3, apache1-base
 %webapp_register apache %{_webapp}
 
-%triggerun web -- apache1 < 1.3.37-3, apache1-base
+%triggerun -n php-pecl-memcache-web -- apache1 < 1.3.37-3, apache1-base
 %webapp_unregister apache %{_webapp}
 
-%triggerin web -- apache < 2.2.0, apache-base
+%triggerin -n php-pecl-memcache-web -- apache < 2.2.0, apache-base
 %webapp_register httpd %{_webapp}
 
-%triggerun web -- apache < 2.2.0, apache-base
+%triggerun -n php-pecl-memcache-web -- apache < 2.2.0, apache-base
 %webapp_unregister httpd %{_webapp}
 
-%triggerin web -- lighttpd
+%triggerin -n php-pecl-memcache-web -- lighttpd
 %webapp_register lighttpd %{_webapp}
 
-%triggerun web -- lighttpd
+%triggerun -n php-pecl-memcache-web -- lighttpd
 %webapp_unregister lighttpd %{_webapp}
 
 %files
@@ -243,7 +256,8 @@ fi
 %attr(755,root,root) %{php_extensiondir}/%{modname}.so
 %{_examplesdir}/%{name}-%{version}
 
-%files web
+%if %{with web}
+%files -n php-pecl-memcache-web
 %defattr(644,root,root,755)
 %dir %attr(750,root,http) %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
@@ -251,3 +265,4 @@ fi
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/lighttpd.conf
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/config.php
 %{_appdir}
+%endif
