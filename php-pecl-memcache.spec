@@ -15,12 +15,12 @@
 Summary:	%{modname} - a memcached extension
 Summary(pl.UTF-8):	%{modname} - rozszerzenie memcached
 Name:		%{php_name}-pecl-%{modname}
-Version:	4.0.5.1
-Release:	2
+Version:	4.0.5.2
+Release:	1
 License:	PHP 3.01
 Group:		Development/Languages/PHP
 Source0:	https://pecl.php.net/get/memcache-%{version}.tgz
-# Source0-md5:	0b11dcaa218872b7645d2c3425ce7fe8
+# Source0-md5:	bfbf18bc0b410e4f70f13c8fcd965647
 Source1:	%{modname}.ini
 Source2:	%{modname}-apache.conf
 Source3:	%{modname}-lighttpd.conf
