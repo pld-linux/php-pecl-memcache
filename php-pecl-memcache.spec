@@ -90,9 +90,7 @@ Obsoletes:	php71-pecl-memcache-web < 4.0.5.1-2
 Obsoletes:	php72-pecl-memcache-web < 4.0.5.1-2
 Obsoletes:	php73-pecl-memcache-web < 4.0.5.1-2
 Obsoletes:	php74-pecl-memcache-web < 4.0.5.1-2
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description -n php-pecl-memcache-web
 Via this web interface script you can manage and view statistics of
