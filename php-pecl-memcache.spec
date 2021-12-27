@@ -169,17 +169,14 @@ phpize
 %{__make}
 
 # simple module load test
-%{__php} -n -q \
+%{__php} -n -q -d display_errors=off \
 	-d extension_dir=modules \
-%if "%php_major_version.%php_minor_version" >= "7.4"
-	-d extension=%{php_extensiondir}/simplexml.so \
-	-d extension=%{php_extensiondir}/session.so \
-%else
+%if "%php_major_version.%php_minor_version" < "7.4"
 	-d extension=%{php_extensiondir}/pcre.so \
 	-d extension=%{php_extensiondir}/spl.so \
+%endif
 	-d extension=%{php_extensiondir}/simplexml.so \
 	-d extension=%{php_extensiondir}/session.so \
-%endif
 	-d extension=%{modname}.so \
 	-m > modules.log
 grep %{modname} modules.log
