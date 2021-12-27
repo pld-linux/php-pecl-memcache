@@ -138,6 +138,7 @@ xfail() {
 
 xfail <<'EOF'
 memcache->addServer() [tests/019.phpt]
+memcache->addServer() with microsecond timeout [tests/056.phpt]
 memcache->set()/memcache->get() with multiple keys and load balancing [tests/020.phpt]
 memcache->getExtendedStats() [tests/022.phpt]
 memcache_get_extended_stats() [tests/022a.phpt]
