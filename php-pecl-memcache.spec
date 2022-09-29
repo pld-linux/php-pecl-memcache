@@ -39,6 +39,7 @@ BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.650
 %if %{with tests}
 BuildRequires:	%{php_name}-cli
+BuildRequires:	%{php_name}-pcntl
 BuildRequires:	memcached
 %endif
 %{?requires_php_extension}
