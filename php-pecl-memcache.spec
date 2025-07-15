@@ -100,8 +100,8 @@ memcache.
 %prep
 %setup -qc
 mv %{modname}-*/* .
-%patch0 -p1
-%patch1 -p1
+%patch -P0 -p1
+%patch -P1 -p1
 
 cat <<'EOF' > run-tests.sh
 #!/bin/sh
